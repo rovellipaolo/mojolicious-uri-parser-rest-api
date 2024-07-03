@@ -1,0 +1,209 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "URI Parser REST API",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "/api"
+        }
+    ],
+    "paths": {
+        "/status": {
+            "get": {
+                "description": "Check the status of the REST API.",
+                "responses": {
+                    "200": {
+                        "description": "The status of the REST API",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "500 Internal Server Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-mojo-name": "status"
+            }
+        },
+        "/parse": {
+            "post": {
+                "description": "Parse a given URI.",
+                "parameters": [
+                    {
+                        "name": "force",
+                        "in": "query",
+                        "description": "Whether the parsing should be forced, even if the URI is not recognized as valid",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": "false"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "A JSON containing the URI to be parsed",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ParseRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The URI parts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ParseResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "400 Bad Request response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "500 Internal Server Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-mojo-name": "parse"
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ErrorResponse": {
+                "type": "object",
+                "required": [
+                    "errors"
+                ],
+                "properties": {
+                    "errors": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "message"
+                            ],
+                            "properties": {
+                                "message": {
+                                    "description": "The error description",
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "description": "The error path",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "status": {
+                        "description": "The error status",
+                        "type": "integer"
+                    }
+                }
+            },
+            "ParseRequest": {
+                "type": "object",
+                "required": [
+                    "uri"
+                ],
+                "properties": {
+                    "uri": {
+                        "description": "The URI to be parsed",
+                        "type": "string"
+                    }
+                }
+            },
+            "ParseResponse": {
+                "type": "object",
+                "required": [
+                    "raw"
+                ],
+                "properties": {
+                    "fragment": {
+                        "description": "The fragment identifier of the URI, if any",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "host": {
+                        "description": "The hostname of the URI, if any",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "port": {
+                        "description": "The port part of the URI, if any",
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "path": {
+                        "description": "The path part of the URI, if any",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "query": {
+                        "description": "The query part of the URI, if any",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "raw": {
+                        "description": "The raw URI as a string",
+                        "type": "string"
+                    },
+                    "scheme": {
+                        "description": "The scheme part of the URI, if any",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "userinfo": {
+                        "description": "The userinfo part of the URI, if any",
+                        "type": "string",
+                        "nullable": true
+                    }
+                }
+            },
+            "StatusResponse": {
+                "type": "object",
+                "required": [
+                    "message"
+                ],
+                "properties": {
+                    "message": {
+                        "description": "The status description",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

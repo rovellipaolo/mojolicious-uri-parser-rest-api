@@ -1,0 +1,32 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: "5.40"
+      - name: Build
+        run: |
+          make build-dev
+          cpan Devel::Cover::Report::Coveralls
+      - name: Checkstyle
+        run: |
+          make checkstyle
+      - name: Test
+        run: |
+          make test-coverage
+      - name: Show coverage report in GitHub Actions summary
+        run: |
+          echo "$(cover -summary -silent)" >> $GITHUB_STEP_SUMMARY
