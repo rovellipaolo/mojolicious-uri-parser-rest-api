@@ -25,6 +25,9 @@ $ git clone https://github.com/rovellipaolo/mojolicious-uri-parser-rest-api
 $ cd mojolicious-uri-parser-rest-api
 ```
 
+URI Parser REST API has two ways to be executed: natively in your local environment or in [Docker](https://www.docker.com/).
+
+### Native
 To execute URI Parser REST API in your local machine, you need `Perl 5.30` or higher installed.
 Just launch the following commands, which will install all the needed Perl dependencies.
 
@@ -49,6 +52,15 @@ $ curl -H "Content-Type: application/json" -X POST http://127.0.0.1:3000/api/par
     "scheme": "https",
     "userinfo": "user:password"
 }
+```
+
+### Docker
+To execute URI Parser REST API in Docker, you need `Docker` installed.
+To build the Docker image, launch the following commands:
+
+```
+$ make build-docker
+$ make run-docker
 ```
 
 
