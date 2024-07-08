@@ -24,6 +24,10 @@ build-dev:
 run-dev:
 	morbo ./app.pl -l http://*:3000 -w $(PWD)/app.conf -w $(PWD)/openapi.json
 
+.PHONY: run
+run:
+	hypnotoad ./app.pl --foreground 2>&1
+
 
 # Test
 
