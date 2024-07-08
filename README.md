@@ -4,6 +4,7 @@ URI Parser REST API
 URI Parser REST API is a simple Mojolicious-based REST API to parse URIs.
 
 [![Build Status: GitHub Actions](https://github.com/rovellipaolo/mojolicious-uri-parser-rest-api/actions/workflows/ci.yml/badge.svg)](https://github.com/rovellipaolo/mojolicious-uri-parser-rest-api/actions)
+[![Test Coverage: Coveralls](https://coveralls.io/repos/github/rovellipaolo/mojolicious-uri-parser-rest-api/badge.svg)](https://coveralls.io/github/rovellipaolo/mojolicious-uri-parser-rest-api)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 
@@ -32,6 +33,11 @@ $ make build
 $ make run-dev
 ```
 ```shell
+$ curl -X GET http://127.0.0.1:3000/api/status
+{
+    "message": "REST API up and running... long live and prosper!"
+}
+
 $ curl -H "Content-Type: application/json" -X POST http://127.0.0.1:3000/api/parse -d '{"uri": "https://user:password@domain.tld:8080/path?key=value#fragment"}'
 {
     "fragment": "fragment",

@@ -76,6 +76,8 @@ plugin 'Config'  => { file => DEFAULT_CONFIG_PATH };
 plugin 'OpenAPI' => { url  => app->config->{openapi_path} };
 plugin 'RemoteAddr';
 
+# Setup:
+
 my $log_level = lc( app->config->{log_level} // DEFAULT_LOG_LEVEL );
 app->log->level($log_level);
 app->log->info("Log level: $log_level");
